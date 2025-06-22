@@ -60,6 +60,14 @@ const MainLayout: React.FC = () => {
     navigate("/login")
   }
 
+  // 로그아웃 버튼 클릭 시,
+    const handleLogoutClick = () => {
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userId');
+    alert("로그아웃 되었습니다.");
+    navigate("/login")
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
@@ -68,7 +76,19 @@ const MainLayout: React.FC = () => {
       </Sider>
       <Layout>
         <Header style={{ padding:"0 16px", background: colorBgContainer, display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
-          <Button onClick={handleMemberClick}>로그인·회원가입</Button>
+
+          {sessionStorage.getItem("isLoggedIn") !== "true" ? (
+            <Button onClick={handleMemberClick}>
+              로그인·회원가입
+            </Button>
+            ) : (
+              <Button onClick={handleLogoutClick}>
+                로그아웃
+              </Button>
+            )
+          }
+
+
         </Header>
         <Content style={{ margin: '16px' }}>
           <div

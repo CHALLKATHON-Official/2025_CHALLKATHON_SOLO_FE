@@ -11,7 +11,7 @@ interface MemberRegisterDto{
 
 // 회원가입
 export const memberRegister = async(memberRegisterDto: MemberRegisterDto) => {
-    const res = await axios.post(`${API_SERVER_URL}/memberRegister`, memberRegisterDto)
+    const res = await axios.post(`${API_SERVER_URL}/user/join`, memberRegisterDto)
     return res.data;
 }
 
@@ -19,7 +19,7 @@ export const memberRegister = async(memberRegisterDto: MemberRegisterDto) => {
 
 // 로그인 get 간단 버전
 export const memberLogin = async(userId: string, userPw: string) => {
-    const res = await axios.get(`${API_SERVER_URL}/memberLogin`, {params: {userId, userPw}});
+    const res = await axios.get(`${API_SERVER_URL}/user/login`, {params: {userId, userPw}});
     return res.data;
 }
 
@@ -35,6 +35,16 @@ export const memberLogin = async(userId: string, userPw: string) => {
 //     const res = await axios.post(`${API_SERVER_URL}/memberLogin`, memberLoginDto)
 //     return res.data;
 // }
+
+
+
+//--------- 일정 관련 (TIMELOG Table) --------- 
+
+// 1. 월별 일정 조회
+export const gettimelog = async(usertableId: number, yearMonth: string) => {
+    const res = await axios.get(`${API_SERVER_URL}/gettimelog`, {params: {usertableId, yearMonth}});
+    return res.data;
+}
 
 
 
