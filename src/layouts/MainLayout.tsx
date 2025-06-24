@@ -63,7 +63,7 @@ const MainLayout: React.FC = () => {
   // 로그아웃 버튼 클릭 시,
     const handleLogoutClick = () => {
     sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('accessToken');
     alert("로그아웃 되었습니다.");
     navigate("/login")
   }

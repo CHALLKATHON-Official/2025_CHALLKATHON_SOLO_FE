@@ -41,7 +41,7 @@ export default function DashboardMainPage() {
     }
     
     return data.reduce((acc, item) => {
-      const date = item.log_date;
+      const date = item.date;
       if (!acc[date]) {
         acc[date] = [];
       }
@@ -52,31 +52,34 @@ export default function DashboardMainPage() {
 
   // 컴포넌트 마운트 또는 월 변경 시 데이터를 불러오는 useEffect
   useEffect(() => {
-    const userIdStr = sessionStorage.getItem('userId');
-    if (!userIdStr) {
+    const userLoggedIn = sessionStorage.getItem('isLoggedIn');
+    const userAccessToken = sessionStorage.getItem('accessToken');
+    if (!userLoggedIn || !userAccessToken) {
       message.error('로그인이 필요한 서비스입니다.');
       navigate('/login');
       return;
     }
 
-    const userId = parseInt(userIdStr, 10);
-    const yearMonth = currentDate.format('YYYY-MM');
+    const year = currentDate.year();
+    const month = currentDate.format('MM'); // '01' ~ '12'
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = await gettimelog(userId, yearMonth);
-        const processed = processData(data);
-        setMonthlyData(processed);
-      } catch (error) {
-        console.error("데이터 조회 실패:", error);
-        message.error('데이터를 불러오는 중 오류가 발생했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    gettimelog(year, month, userAccessToken)
+    .then((res) => {
+            if (res.isSuccess) {
+              const processed = processData(res.data);
+              setMonthlyData(processed);
+            } else {
+              alert("데이터 로딩 실패했습니다.");
+            }
+        })
+        .catch((err) => {
+            console.error("memberLogin 실패: ", err);
+            alert("서버 오류로 데이터 로딩 실패했습니다.");
+        });
 
-    fetchData();
+
+
+
   }, [currentDate, navigate]); // currentDate가 바뀌면 다시 데이터를 불러옴
 
   // 캘린더의 각 날짜 셀을 렌더링하는 함수

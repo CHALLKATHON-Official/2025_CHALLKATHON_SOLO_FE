@@ -17,33 +17,39 @@ export default function LoginPage() {
       }
     }, [])
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
   // 로그인 버튼 클릭 시
     const handleLogin = () => {
-        if (!username.trim() || !password.trim()) {
-            alert("아이디와 비밀번호를 모두 입력해주세요.");
+        if (!email.trim() || !password.trim()) {
+            alert("이메일과 비밀번호를 모두 입력해주세요.");
             return; 
         }
 
-        memberLogin(username, password)
-            .then((num) => {
-                if(num !== -1){ // 로그인 실패시 백에서 -1 반환
-                    alert("로그인 되었습니다.")
-                    sessionStorage.setItem('isLoggedIn', 'true');
-                    sessionStorage.setItem('userId', num); 
-                    navigate('/');
-                }
-                else{
-                    alert("아이디 또는 비밀번호를 확인해주세요. ")
-                }
-            })
-            .catch((err) => {
-                console.log("memberLogin 실패: ", err);
-                alert("서버 오류로 로그인 실패했습니다.")
-            })
+        const loginDto = {
+            email: email,
+            password: password,
+        }
+
+        memberLogin(loginDto)
+        .then((res) => {
+            if (res.isSuccess) {
+                alert("로그인 되었습니다.");
+
+                // accessToken, refreshToken 저장 (필요한 경우)
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('accessToken', res.data.accessToken);
+                navigate('/');
+            } else {
+                alert("아이디 또는 비밀번호를 확인해주세요.");
+            }
+        })
+        .catch((err) => {
+            console.error("memberLogin 실패: ", err);
+            alert("서버 오류로 로그인 실패했습니다.");
+        });
     };
 
     // 비밀번호 입력 필드에서 Enter 키 누를 때 로그인 클릭
@@ -75,9 +81,9 @@ return (
         <div style={{ marginBottom: '20px', width: '100%' }}>
             <Input
                 size="large"
-                value={username}
-                onChange={(e) => { setUsername(e.target.value) }}
-                placeholder="아이디"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value) }}
+                placeholder="이메일"
                 prefix={<UserOutlined />}
             />
         </div>

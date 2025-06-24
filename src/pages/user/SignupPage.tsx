@@ -17,7 +17,7 @@ export default function SignupPage() {
     }, [])
 
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
 
@@ -25,34 +25,50 @@ export default function SignupPage() {
     //  회원가입 버튼 클릭 시
     const handleSignup = () => {
         // --- 유효성 검사 ---
-        if (!username.trim() || !password.trim() || !nickname.trim()) {
+        if (!email.trim() || !password.trim() || !nickname.trim()) {
             alert("아이디, 비밀번호를 포함한 모든 정보를 입력해주세요."); 
             return;
         }
-        
-        
+        // 이메일 형식 검사 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+        alert("올바른 이메일 형식을 입력해주세요.");
+        return;
+        }
+
+        // 비밀번호 길이 검사
+        if (password.length < 8) {
+        alert("비밀번호는 8자 이상이어야 합니다.");
+        return;
+        }
+
         const registrationData = {
-            userId: username,
-            userPw: password,
+            email: email,
+            password: password,
             nickname: nickname,
         };
 
     
         memberRegister(registrationData)
-            .then((bool) => {
-                if(bool){
+            .then((res) => {
+                if(res.isSuccess){
                     alert("회원가입 되었습니다.");
                     navigate('/login');
 
                 }
-                else{
-                    alert("이미 존재하는 회원입니다.");
-                }
             })
             .catch((err) => {
-                console.log("memberRegister 실패: ", err); 
+            console.error("memberRegister 실패: ", err);
+
+            const errorMessage = err.response?.data?.message;
+
+            if (errorMessage === "이미 존재하는 이메일입니다.") {
+                alert("이미 존재하는 회원입니다.");
+            } else {
                 alert("서버 오류로 회원가입 실패했습니다.");
-            })
+            }
+            });
+
     };
 
 
@@ -75,13 +91,13 @@ export default function SignupPage() {
                     padding: '0 20px',
                 }}
             >
-                {/* 아이디 입력 */}
+                {/* 이메일 입력 */}
                 <div style={{ marginBottom: '20px', width: '100%' }}>
                     <Input
                         size="large"
-                        value={username}
-                        onChange={(e) => { setUsername(e.target.value) }}
-                        placeholder="아이디"
+                        value={email}
+                        onChange={(e) => { setEmail(e.target.value) }}
+                        placeholder="이메일"
                         prefix={<UserOutlined />}
                     />
                 </div>
