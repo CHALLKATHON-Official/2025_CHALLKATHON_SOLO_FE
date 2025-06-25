@@ -49,7 +49,7 @@ const MainLayout: React.FC = () => {
   const navigate = useNavigate();
 
   // menu 누르면 navigate
-  const handleMenuClick = (e) => {
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
     if(e.key.startsWith("/")){
       navigate(e.key);
     }

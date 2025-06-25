@@ -1,7 +1,7 @@
 import { LockOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Input } from 'antd'
 import Title from 'antd/es/typography/Title'
-import React, { useEffect, useState } from 'react'
+import /*React,*/ { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { memberRegister } from '../../api/timechartApi'
 

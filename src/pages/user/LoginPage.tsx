@@ -2,7 +2,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Input, Space } from 'antd'
 import Title from 'antd/es/typography/Title'
-import React, { useEffect, useState, type KeyboardEvent } from 'react'
+import /*React,*/ { useEffect, useState, type KeyboardEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { memberLogin } from '../../api/timechartApi';
 
