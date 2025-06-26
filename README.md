@@ -1,54 +1,101 @@
-# React + TypeScript + Vite
+# ⏰ 타임차트 (TimeChart)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📢 서비스 한줄 소개
+**타임차트(TimeChart)** — 시간 사용을 다양한 차트로 시각화해 효율적인 시간 관리를 돕는 캘린더 기반 서비스
 
-Currently, two official plugins are available:
+## 📝 서비스 설명
+**타임차트(TimeChart)**는 기존의 캘린더 앱과는 다르게,  
+**시간 사용 내역을 다양한 차트**로 시각화하여 확인할 수 있는 시간 관리 서비스입니다.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+일별 시간 분포와 월간 카테고리 추이를 시각화한 **두 개의 대시보드**를 통해  
+사용자는 자신의 시간을 더 효율적으로 관리할 수 있습니다.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 👨‍💻 개발자 소개
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+| 이름     | 역할       |
+|----------|------------|
+| 강시원   | 백엔드     |
+| 곽수인   | 프론트엔드 |
+| 곽채연   | 프론트엔드 |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠 사용 기술 스택
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **Backend**: Spring Boot  
+- **Frontend**: React, TypeScript  
+- **Database**: MySQL  
+
+---
+
+## 📁 파일 구조
+timechart/
+├── public/
+│ └── assets/
+│ └── (이미지)
+│
+├── src/
+│ ├── api/
+│ │ └── timechartApi.ts
+│ │
+│ ├── assets/
+│ │ └── (이미지)
+│ │
+│ ├── layouts/
+│ │ └── MainLayout.tsx
+│ │
+│ ├── pages/
+│ │ ├── dashboard/
+│ │ │ ├── DashboardMainPage.tsx
+│ │ │ └── Dashboard2Page.tsx
+│ │ │
+│ │ ├── plan/
+│ │ │ └── AddTimePage.tsx
+│ │ │
+│ │ └── user/
+│ │ ├── LoginPage.tsx
+│ │ └── SignupPage.tsx
+│ │
+│ ├── router/
+│ │ └── router.tsx
+│ │
+│ ├── App.css
+│ ├── App.tsx
+│ ├── index.css
+│ └── main.tsx
+│
+└── README.md
+
+---
+
+## 📌 기능별 소개
+
+### ✅ 회원 관련
+- **회원가입**: 이메일, 비밀번호, 닉네임을 이용한 간단한 회원가입  
+- **로그인**: 이메일과 비밀번호를 통한 로그인  
+
+### 📅 대시보드 1 - 일별 시간 분포
+- **일별 시간 분포 조회**:  
+  캘린더 형식으로 구성되어 있으며, 특정 월의 일별 시간 사용 내역을 확인 가능  
+  → 각 날짜 셀에는 가장 많은 시간을 사용한 카테고리 최대 3개까지 표시  
+  → 셀 클릭 시 해당 날짜의 시간 분포를 **파이, 막대, 선, 분산형 차트**로 확인 가능 (드롭다운으로 차트 유형 선택)
+
+### 📊 대시보드 2 - 카테고리별 추이
+- **카테고리별 시간 추이 그래프**:  
+  선택한 년/월 기준으로 카테고리별 시간 변화 추이를 **막대, 선, 분산형 그래프**로 확인 가능  
+  → 카테고리 선택: 공부/일, 수면, 운동, 여가, 기타  
+- **카테고리별 총 시간 및 그래프**:  
+  한 달 간 누적 시간을 카드 형식과 차트로 시각화 → 차트는 **파이, 막대, 선, 분산형 차트**로 확인 가능((드롭다운으로 차트 유형 선택)
+- **카테고리별 일 평균 시간**:  
+  하루 평균 시간 데이터를 **카드 형식**으로 표시  
+
+### ✍️ 기록 추가
+- **하루 기록 추가**:  
+  당일 기록만 가능하며, 하루에 한 번만 저장 가능  
+  → 카테고리 선택: 공부/일, 수면, 운동, 여가, 기타
+
+---
+
+
