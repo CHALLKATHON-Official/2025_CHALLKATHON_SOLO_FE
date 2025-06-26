@@ -7,6 +7,8 @@ import {
 import type { MenuProps } from 'antd';
 import { Button, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
+import logo from '../assets/navLogoFFF.png'
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -34,7 +36,7 @@ const items: MenuItem[] = [
     getItem('일별 시간 분포', '/dashboard1'),
     getItem('카테고리별 추이', '/dashboard2')
   ]),
-  getItem('일정 추가', '/addtime', <ScheduleOutlined />,),
+  getItem('기록 추가', '/addtime', <ScheduleOutlined />,),
 ];
 
 
@@ -75,7 +77,22 @@ const MainLayout: React.FC = () => {
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick}/>
       </Sider>
       <Layout>
-        <Header style={{ padding:"0 16px", background: colorBgContainer, display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
+        {/* <Header style={{ padding:"0 16px", background: colorBgContainer, display: "flex", justifyContent: "flex-end", alignItems: "center"}}> */}
+
+        <Header style={{ 
+            padding:"0 24px", 
+            background: colorBgContainer, 
+            display: "flex", 
+            justifyContent: "space-between", // 로고와 버튼을 양쪽 끝으로 정렬
+            alignItems: "center"
+        }}>
+          <img 
+            src={logo} 
+            alt="TimeChart Logo" 
+            style={{ height: '40px', cursor: 'pointer' }}
+            onClick={() => navigate('/')} // 로고 클릭 시 홈으로 이동
+          />
+
 
           {sessionStorage.getItem("isLoggedIn") !== "true" ? (
             <Button onClick={handleMemberClick}>

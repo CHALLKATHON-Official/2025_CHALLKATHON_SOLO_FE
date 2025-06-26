@@ -71,18 +71,3 @@ export const insertTimelog = async(timelogInsertDto: TimelogInsertDto, accessTok
 }
 
 
-
-// delete 예시
-// export const deleteEx = async(id: number, source: string) => {
-//     const res = await axios.delete(`${API_SERVER_URL}/deleteEx`, {params: {id, source}});
-//     return res.data;
-// }
-
-// put 예시
-// export const changeEx = async(memberLoginDto: MemberLoginDto) => {
-//     const res = await axios.put(`${API_SERVER_URL}/changeEx`, memberLoginDto)
-//     return res.data;
-// }
-
-
-

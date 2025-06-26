@@ -5,23 +5,24 @@ import Title from 'antd/es/typography/Title'
 import /*React,*/ { useEffect, useState, type KeyboardEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { memberLogin } from '../../api/timechartApi';
+import navLogo from '../../assets/navLogoFFF.png'; 
 
 
 export default function LoginPage() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-      //  로그인 되어 있으면 접근 X
-      if (sessionStorage.getItem('isLoggedIn') === 'true') {
-          navigate('/'); 
-      }
+    useEffect(() => {
+        //  로그인 되어 있으면 접근 X
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            navigate('/'); 
+        }
     }, [])
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
 
-  // 로그인 버튼 클릭 시
+    // 로그인 버튼 클릭 시
     const handleLogin = () => {
         if (!email.trim() || !password.trim()) {
             alert("이메일과 비밀번호를 모두 입력해주세요.");
@@ -38,7 +39,6 @@ export default function LoginPage() {
             if (res.isSuccess) {
                 alert("로그인 되었습니다.");
 
-                // accessToken, refreshToken 저장 (필요한 경우)
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('accessToken', res.data.accessToken);
                 navigate('/');
@@ -48,11 +48,10 @@ export default function LoginPage() {
         })
         .catch((err) => {
             console.error("memberLogin 실패: ", err);
-            alert("서버 오류로 로그인 실패했습니다.");
+            alert("로그인 실패했습니다.");
         });
     };
 
-    // 비밀번호 입력 필드에서 Enter 키 누를 때 로그인 클릭
     const handlePasswordKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             handleLogin();
@@ -61,10 +60,19 @@ export default function LoginPage() {
 
 return (
     <>
-    <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
-        <Title level={2}>
-            타임 차트 로그인
-        </Title>
+    <div style={{
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        marginTop: '40px',
+        marginBottom: '40px'
+    }}>
+        <img 
+            src={navLogo} 
+            alt="타임 차트 로그인" 
+            style={{ height: 'auto', maxWidth: '150px', marginRight: '10px' }} 
+        />
+        <Title level={3} style={{ margin: 0 }}>로그인</Title> 
     </div>
 
     {/* 로그인 폼 영역 */}
@@ -72,9 +80,11 @@ return (
         style={{
             display: 'flex',
             flexDirection: 'column',
-            margin: '0 auto',
-            maxWidth: '400px',
-            padding: '0 20px', 
+            margin: '0 auto 40px auto', 
+            maxWidth: '400px', 
+            padding: '24px 32px', 
+            border: '1px solid #d9d9d9', 
+            borderRadius: '8px', 
         }}
     >
         {/* 아이디 입력 */}
@@ -96,7 +106,6 @@ return (
                 onChange={(e) => { setPassword(e.target.value) }}
                 placeholder="비밀번호"
                 prefix={<LockOutlined />}
-                // Enter 키 이벤트 핸들러 추가
                 onKeyDown={handlePasswordKeyDown} 
             />
         </div>
@@ -119,13 +128,6 @@ return (
                 <Link to="/signup" style={{ color: '#1677ff' }}>
                     회원가입
                 </Link>
-                {/* <Link to="/findid" style={{ color: '#1677ff' }}>
-                    아이디 찾기
-                </Link>
-                <Link to="/findpassword" style={{ color: '#1677ff' }}>
-                    비밀번호 찾기
-                </Link> */}
-                {/* ------------------- */}
             </Space>
         </div>
     </div>

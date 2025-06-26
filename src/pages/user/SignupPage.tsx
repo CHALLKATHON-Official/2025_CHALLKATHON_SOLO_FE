@@ -3,6 +3,7 @@ import { Button, Input } from 'antd'
 import Title from 'antd/es/typography/Title'
 import /*React,*/ { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import navLogo from '../../assets/navLogoFFF.png'; 
 import { memberRegister } from '../../api/timechartApi'
 
 export default function SignupPage() {
@@ -75,10 +76,20 @@ export default function SignupPage() {
 
     return (
         <>
-            <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
-                <Title level={2}>
-                    타임 차트 회원가입
-                </Title>
+            {/* 로고 이미지 영역 */}
+            <div style={{
+                display: 'flex',  
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                marginTop: '40px',
+                marginBottom: '40px'
+            }}>
+                <img 
+                    src={navLogo} 
+                    alt="타임 차트 회원가입" 
+                    style={{ height: 'auto', maxWidth: '150px', marginRight: '10px' }} 
+                />
+                <Title level={3} style={{ margin: 0 }}>회원가입</Title> 
             </div>
 
             {/* 회원가입 폼 영역 */}
@@ -86,9 +97,11 @@ export default function SignupPage() {
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    margin: '0 auto',
+                    margin: '0 auto 40px auto', 
                     maxWidth: '400px',
-                    padding: '0 20px',
+                    padding: '24px 32px', 
+                    border: '1px solid #d9d9d9', 
+                    borderRadius: '8px', 
                 }}
             >
                 {/* 이메일 입력 */}
@@ -125,7 +138,6 @@ export default function SignupPage() {
                     />
                 </div>
                 
-                {/* -------------------------- */}
 
 
                 {/* 회원가입 버튼 */}
